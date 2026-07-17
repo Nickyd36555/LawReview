@@ -18,6 +18,9 @@ export async function POST(request) {
     redirect(`/lawyers/${slug}`);
   }
 
-  addReview({ lawyerId: lawyer.id, userId: user.id, rating, title, body });
+  const result = addReview({ lawyerId: lawyer.id, userId: user.id, rating, title, body });
+  if (!result.ok) {
+    redirect(`/lawyers/${slug}?error=${encodeURIComponent('Your review is locked now that the lawyer has responded — use the rebuttal box under their response instead.')}`);
+  }
   redirect(`/lawyers/${slug}?reviewed=1`);
 }

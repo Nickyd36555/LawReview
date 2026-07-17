@@ -210,6 +210,46 @@ a:hover .lawyer-card {
 .review p { color: #cfc9bc; margin-top: 6px; }
 .review .who { color: var(--muted); font-size: .85rem; margin-top: 10px; font-style: italic; }
 
+/* Review threads: client review -> lawyer response -> client rebuttal */
+.reply {
+  margin: 16px 0 0 22px; padding: 14px 18px;
+  background: var(--bg-deep); border-radius: 4px;
+  border-left: 2px solid var(--gold);
+}
+.reply.rebuttal { border-left-color: var(--line); margin-left: 44px; }
+.reply .reply-label {
+  font-size: .74rem; color: var(--gold); text-transform: uppercase;
+  letter-spacing: .14em; font-weight: 600; margin-bottom: 6px;
+}
+.reply.rebuttal .reply-label { color: var(--muted); }
+.reply p { color: #cfc9bc; }
+.reply .who { margin-top: 6px; }
+
+.reply-form { margin: 16px 0 0 22px; }
+.reply-form .reply-label {
+  display: block; font-size: .74rem; color: var(--gold);
+  text-transform: uppercase; letter-spacing: .14em; font-weight: 600;
+  margin-bottom: 6px;
+}
+.reply-form textarea {
+  width: 100%; padding: 12px 14px; border: 1px solid var(--line);
+  border-radius: 4px; font: inherit; background: var(--bg-deep); color: var(--ink);
+}
+.reply-form textarea:focus { outline: none; border-color: var(--gold); }
+.reply-form button {
+  margin-top: 10px; padding: 9px 20px; border: none; border-radius: 4px;
+  font: inherit; font-size: .84rem; font-weight: 600; letter-spacing: .08em;
+  text-transform: uppercase; cursor: pointer;
+  background: linear-gradient(180deg, var(--gold-bright), var(--gold));
+  color: #14161a;
+}
+.reply-form button:hover { filter: brightness(1.08); }
+
+.thread-closed {
+  margin: 14px 0 0 44px; color: var(--muted); font-size: .82rem;
+  font-style: italic; letter-spacing: .04em;
+}
+
 /* ---------- Forms ---------- */
 
 .form-card {
