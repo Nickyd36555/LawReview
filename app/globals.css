@@ -196,6 +196,37 @@ a:hover .lawyer-card {
   letter-spacing: .18em; font-weight: 600;
 }
 
+/* ---------- Report card breakdown ---------- */
+
+.breakdown { margin-top: 40px; }
+.breakdown h2 { margin-bottom: 18px; font-size: 1.7rem; }
+.cat-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 14px;
+  background: var(--card); border: 1px solid var(--line-gold);
+  border-radius: 8px; padding: 24px;
+}
+.cat-cell { text-align: center; }
+.cat-cell .cat-label {
+  margin-top: 10px; font-size: .78rem; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .1em; font-weight: 600;
+}
+.cat-cell .cat-avg { color: var(--gold-bright); font-size: .88rem; margin-top: 2px; }
+
+/* Per-review category scores */
+.review-cats { display: flex; flex-wrap: wrap; gap: 8px 16px; margin: 10px 0 4px; }
+.review-cat {
+  font-size: .78rem; color: var(--muted); text-transform: uppercase;
+  letter-spacing: .08em;
+}
+.review-cat b { color: var(--gold-bright); font-weight: 700; }
+
+/* Five-category selects on the review form */
+.rating-fields {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 0 20px;
+}
+
 /* ---------- Reviews ---------- */
 
 .reviews-section { margin-top: 44px; }

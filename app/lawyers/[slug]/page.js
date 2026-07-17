@@ -1,13 +1,17 @@
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { getLawyerBySlug, getReviews, effectiveGrade } from '../../../lib/db';
+import {
+  getLawyerBySlug, getReviews, effectiveGrade, categoryAverages,
+  gradeFromAverage, CATEGORIES,
+} from '../../../lib/db';
 import { currentUser } from '../../../lib/auth';
 import { Avatar, GradeBadge, Stoplight, StoplightLabel } from '../../../components/ui';
 
 export const dynamic = 'force-dynamic';
 
 function Stars({ n }) {
-  return <span className="stars">{'★'.repeat(n)}{'☆'.repeat(5 - n)}</span>;
+  const rounded = Math.round(n);
+  return <span className="stars">{'★'.repeat(rounded)}{'☆'.repeat(5 - rounded)}</span>;
 }
 
 export default async function LawyerPage({ params, searchParams }) {
@@ -22,6 +26,7 @@ export default async function LawyerPage({ params, searchParams }) {
 
   const isOwner = !!user && lawyer.claimed_by === user.id && !!lawyer.subscription_active;
   const myReview = user ? reviews.find((r) => r.user_id === user.id) : null;
+  const breakdown = lawyer.review_count > 0 ? categoryAverages(lawyer.id) : null;
 
   return (
     <>
@@ -50,6 +55,22 @@ export default async function LawyerPage({ params, searchParams }) {
         </div>
       </div>
 
+      {/* Per-category report card, averaged across all client reviews */}
+      {breakdown && (
+        <section className="breakdown">
+          <h2>Report Card Breakdown</h2>
+          <div className="cat-grid">
+            {breakdown.map((c) => (
+              <div className="cat-cell" key={c.key}>
+                <GradeBadge grade={gradeFromAverage(c.avg)} size={44} />
+                <div className="cat-label">{c.label}</div>
+                <div className="cat-avg">{c.avg.toFixed(1)} / 5</div>
+              </div>
+            ))}
+          </div>
+        </section>
+      )}
+
       {/* Client reviews underneath */}
       <section className="reviews-section">
         <h2>Client Reviews ({reviews.length})</h2>
@@ -70,6 +91,13 @@ export default async function LawyerPage({ params, searchParams }) {
           return (
             <div className="review" key={r.id}>
               <Stars n={r.rating} /> <strong>{r.title}</strong>
+              <div className="review-cats">
+                {CATEGORIES.map((c) => (
+                  <span className="review-cat" key={c.key}>
+                    {c.label} <b>{r[`rating_${c.key}`]}</b>
+                  </span>
+                ))}
+              </div>
               <p>{r.body}</p>
               <div className="who">
                 — {r.reviewer_name}, {r.created_at.slice(0, 10)}
@@ -136,14 +164,29 @@ export default async function LawyerPage({ params, searchParams }) {
             <h2>{myReview ? 'Update your review' : 'Write a review'}</h2>
             <form action="/api/reviews" method="post">
               <input type="hidden" name="lawyerSlug" value={lawyer.slug} />
-              <label htmlFor="rating">Your rating</label>
-              <select id="rating" name="rating" required defaultValue={myReview ? String(myReview.rating) : '5'}>
-                <option value="5">★★★★★ — Excellent</option>
-                <option value="4">★★★★☆ — Good</option>
-                <option value="3">★★★☆☆ — Average</option>
-                <option value="2">★★☆☆☆ — Poor</option>
-                <option value="1">★☆☆☆☆ — Terrible</option>
-              </select>
+              <p className="fine" style={{ marginTop: 0 }}>
+                Rate your lawyer in each of the five categories below. Their
+                overall grade comes from these scores.
+              </p>
+              <div className="rating-fields">
+                {CATEGORIES.map((c) => (
+                  <div key={c.key}>
+                    <label htmlFor={`rating_${c.key}`}>{c.label}</label>
+                    <select
+                      id={`rating_${c.key}`}
+                      name={`rating_${c.key}`}
+                      required
+                      defaultValue={myReview ? String(myReview[`rating_${c.key}`]) : '5'}
+                    >
+                      <option value="5">★★★★★ — Excellent</option>
+                      <option value="4">★★★★☆ — Good</option>
+                      <option value="3">★★★☆☆ — Average</option>
+                      <option value="2">★★☆☆☆ — Poor</option>
+                      <option value="1">★☆☆☆☆ — Terrible</option>
+                    </select>
+                  </div>
+                ))}
+              </div>
               <label htmlFor="title">Title</label>
               <input id="title" name="title" required maxLength={100} placeholder="Sum it up in a sentence" defaultValue={myReview ? myReview.title : ''} />
               <label htmlFor="body">Your experience</label>
