@@ -5,17 +5,20 @@ export default function Home() {
   return (
     <>
       <section className="hero">
-        <h1>Know before you hire.</h1>
+        <h1>Peace of mind, <em>before</em> you hire.</h1>
+        <div className="hero-rule" />
         <p>
-          LawReview grades lawyers like a report card — A through F — based on
-          reviews from real clients. Our stoplight tells you the bottom line at
-          a glance: green means they&apos;re OK to hire, red means think twice.
+          Choosing a lawyer is one of life&apos;s most stressful decisions.
+          LawReview makes it simple: every lawyer carries a report-card grade —
+          A through F — earned from real client reviews, and a stoplight that
+          gives you the bottom line at a glance. Green means you&apos;re in good
+          hands. Red means think twice.
         </p>
         <SearchBar />
         <div className="key-strip">
-          <div className="item"><GradeBadge grade="A" size={28} /> Report-card grades from client reviews</div>
-          <div className="item"><Stoplight active="green" size={12} /> Green = OK to hire</div>
-          <div className="item"><Stoplight active="red" size={12} /> Red = think twice</div>
+          <div className="item"><GradeBadge grade="A" size={30} /> Report-card grades from real clients</div>
+          <div className="item"><Stoplight active="green" size={12} /> Green — you&apos;re in good hands</div>
+          <div className="item"><Stoplight active="red" size={12} /> Red — think twice</div>
         </div>
       </section>
     </>

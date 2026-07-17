@@ -16,9 +16,9 @@ export default async function SearchPage({ searchParams }) {
 
   return (
     <>
-      <h1 style={{ color: 'var(--brand)', marginBottom: 16 }}>Find a Lawyer</h1>
+      <h1 className="page-title">Find a Lawyer</h1>
       <SearchBar defaults={filters} />
-      <p style={{ marginTop: 20, color: 'var(--muted)' }}>
+      <p className="results-count">
         {results.length} lawyer{results.length === 1 ? '' : 's'} found
         {filters.location ? ` near “${filters.location}”` : ''}
       </p>

@@ -2,11 +2,11 @@ import Link from 'next/link';
 import { currentUser } from '../lib/auth';
 
 const GRADE_COLORS = {
-  A: '#1a7f37',
-  B: '#4d8f2f',
-  C: '#b58a00',
-  D: '#c4530a',
-  F: '#b3261e',
+  A: 'linear-gradient(160deg, #2c8a55, #1d5c39)',
+  B: 'linear-gradient(160deg, #6e9142, #4b662b)',
+  C: 'linear-gradient(160deg, #b3903a, #7d6323)',
+  D: 'linear-gradient(160deg, #b06232, #7c421f)',
+  F: 'linear-gradient(160deg, #a83c33, #732722)',
 };
 
 export function GradeBadge({ grade, size = 56 }) {
@@ -67,12 +67,17 @@ export function Avatar({ name, size = 120 }) {
       viewBox="0 0 100 100"
       role="img"
       aria-label={`Photo of ${name}`}
-      style={{ borderRadius: 12, flexShrink: 0 }}
+      style={{
+        borderRadius: 8,
+        flexShrink: 0,
+        border: '1px solid rgba(198, 163, 95, .35)',
+        boxShadow: '0 10px 24px rgba(0, 0, 0, .45)',
+      }}
     >
-      <rect width="100" height="100" fill={`hsl(${hue}, 45%, 88%)`} />
-      <circle cx="50" cy="38" r="16" fill={`hsl(${hue}, 35%, 55%)`} />
-      <path d="M20 92 a30 30 0 0 1 60 0 z" fill={`hsl(${hue}, 35%, 55%)`} />
-      <text x="50" y="97" textAnchor="middle" fontSize="13" fontWeight="700" fill={`hsl(${hue}, 45%, 30%)`}>
+      <rect width="100" height="100" fill={`hsl(${hue}, 18%, 20%)`} />
+      <circle cx="50" cy="38" r="16" fill={`hsl(${hue}, 22%, 52%)`} />
+      <path d="M20 92 a30 30 0 0 1 60 0 z" fill={`hsl(${hue}, 22%, 52%)`} />
+      <text x="50" y="97" textAnchor="middle" fontSize="13" fontWeight="700" fill="#dcbe7e">
         {initials}
       </text>
     </svg>

@@ -44,8 +44,10 @@ export default function ForLawyers() {
 
       <p style={{ textAlign: 'center' }}>
         <Link href="/for-lawyers/join" className="cta" style={{
-          background: 'var(--accent)', color: '#fff', padding: '12px 28px',
-          borderRadius: 8, fontWeight: 600, display: 'inline-block',
+          background: 'linear-gradient(180deg, var(--gold-bright), var(--gold))',
+          color: '#14161a', padding: '13px 32px', borderRadius: 4,
+          fontWeight: 600, letterSpacing: '.08em', textTransform: 'uppercase',
+          fontSize: '.92rem', display: 'inline-block',
         }}>
           Get listed today
         </Link>
